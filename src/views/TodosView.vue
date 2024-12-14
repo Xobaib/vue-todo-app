@@ -7,7 +7,7 @@ import TodoCreator from "../components/TodoCreator.vue";
 const todoList = ref([]);
 
 function createTodo(todo) {
-  todoList.value.push({ id: uid(), todo, isCompleted: null, isEditing: null });
+    todoList.value.push({ id: uid(), todo, isCompleted: null, isEditing: null });
 }
 </script>
 
