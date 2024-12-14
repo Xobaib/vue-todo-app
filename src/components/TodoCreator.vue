@@ -1,13 +1,19 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 
-const todo = ref("Testing");
+const emit = defineEmits(['create-todo']);
+
+let todo = ref("");
+
+function createTodo() {
+    emit('create-todo', todo.value);
+}
 </script>
 
 <template>
   <div class="input-wrap">
     <input type="text" v-model="todo"/>
-    <button>Create</button>
+    <button @click="createTodo">Create</button>
 </div>
 </template>
 
@@ -35,6 +41,11 @@ const todo = ref("Testing");
   button {
     padding: 8px 16px;
     border: none;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgb(226, 225, 225);
+    }
   }
 }
 </style>
