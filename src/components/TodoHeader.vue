@@ -24,6 +24,7 @@ header {
   nav {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 25px 16px;
 
     .branding {
@@ -41,7 +42,7 @@ header {
 
     .nav-routes {
       display: flex;
-      flex: 1;
+    //   flex: 1;
       justify-content: flex-end;
       gap: 12px;
       list-style: none;
