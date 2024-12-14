@@ -1,5 +1,6 @@
 <script setup>
 import { ref, defineEmits } from 'vue';
+import TodoButton from './TodoButton.vue';
 
 const emit = defineEmits(['create-todo']);
 
@@ -27,7 +28,7 @@ function createTodo() {
 <template>
   <div class="input-wrap" :class="{'input-err': todoState.invalid}">
     <input type="text" v-model="todoState.todo"/>
-    <button @click="createTodo">Create</button>
+    <TodoButton @click="createTodo" />
 </div>
 <p v-if="todoState.invalid" class="err-msg">{{ todoState.errMsg }}</p>
 </template>
@@ -54,16 +55,6 @@ function createTodo() {
 
     &:focus {
       outline: none;
-    }
-  }
-
-  button {
-    padding: 8px 16px;
-    border: none;
-    cursor: pointer;
-
-    &:hover {
-        background-color: rgb(226, 225, 225);
     }
   }
 }
