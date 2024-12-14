@@ -1,13 +1,20 @@
 <script setup>
 import { ref } from "vue";
 import { uid } from "uid";
+import { Icon } from "@iconify/vue";
 
 import TodoCreator from "../components/TodoCreator.vue";
+import TodoItem from "@/components/TodoItem.vue";
 
 const todoList = ref([]);
 
 function createTodo(todo) {
-    todoList.value.push({ id: uid(), todo, isCompleted: null, isEditing: null });
+  todoList.value.push({
+    id: uid(),
+    todo,
+    isCompleted: null,
+    isEditing: null,
+  });
 }
 </script>
 
@@ -15,6 +22,13 @@ function createTodo(todo) {
   <main>
     <h1>Create Todo</h1>
     <TodoCreator @create-todo="createTodo" />
+    <ul v-if="todoList.length > 0" class="todo-list">
+      <TodoItem v-for="todo in todoList" :todoObj="todo" :key="todo.id" />
+    </ul>
+    <p v-else class="todos-msg">
+      <Icon icon="noto-v1:sad-but-relieved-face" width="22" height="22" />
+      <span>You have no todo's to complete! Add one!</span>
+    </p>
   </main>
 </template>
 
@@ -30,6 +44,22 @@ main {
   h1 {
     margin-bottom: 16px;
     text-align: center;
+  }
+
+  .todo-list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin-top: 24px;
+    gap: 20px;
+  }
+
+  .todos-msg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
   }
 }
 </style>
