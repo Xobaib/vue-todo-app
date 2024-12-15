@@ -1,7 +1,7 @@
 <script setup>
 import { Icon } from "@iconify/vue";
 
-defineEmits(["toggle-complete", "edit-todo", "update-todo"]);
+defineEmits(["toggle-complete", "edit-todo", "update-todo", "delete-todo"]);
 
 const props = defineProps({
   todoObj: {
@@ -58,6 +58,7 @@ const props = defineProps({
         height="22"
         style="color: #f95e5e"
         class="icon"
+        @click="$emit('delete-todo', todoObj.id)"
       />
     </div>
   </li>

@@ -28,6 +28,10 @@ function toggleEditTodo(todoPos) {
 function updateTodo(todoVal, todoPos) {
   todoList.value[todoPos].todo = todoVal;
 }
+
+function deleteTodo(todoId) {
+  todoList.value = todoList.value.filter((todo) => todo.id !== todoId);
+}
 </script>
 
 <template>
@@ -43,6 +47,7 @@ function updateTodo(todoVal, todoPos) {
         @toggle-complete="toggleTodoComplete"
         @edit-todo="toggleEditTodo"
         @update-todo="updateTodo"
+        @delete-todo="deleteTodo"
       />
     </ul>
     <p v-else class="todos-msg">
