@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { uid } from "uid";
 import { Icon } from "@iconify/vue";
 
@@ -7,6 +7,10 @@ import TodoCreator from "../components/TodoCreator.vue";
 import TodoItem from "@/components/TodoItem.vue";
 
 const todoList = ref([]);
+
+const todoCompleted = computed(() => {
+  return todoList.value.every((todo) => todo.isCompleted);
+});
 
 function createTodo(todo) {
   todoList.value.push({
@@ -75,6 +79,12 @@ watch(
     <p v-else class="todos-msg">
       <Icon icon="noto-v1:sad-but-relieved-face" width="22" height="22" />
       <span>You have no todo's to complete! Add one!</span>
+    </p>
+    <p v-if="todoCompleted && todoList.length > 0" class="todos-msg">
+      <Icon icon="noto-v1:party-popper" />
+      <span style="color: #41b080"
+        >Congratulation You've Completed All Your Todos!</span
+      >
     </p>
   </main>
 </template>
