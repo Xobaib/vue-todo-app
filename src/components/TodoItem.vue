@@ -1,6 +1,8 @@
 <script setup>
 import { Icon } from "@iconify/vue";
 
+defineEmits(["toggle-complete", "edit-todo", "update-todo"]);
+
 const props = defineProps({
   todoObj: {
     type: Object,
@@ -9,21 +11,54 @@ const props = defineProps({
   index: {
     type: Number,
     required: true,
-  }
+  },
 });
 </script>
 
 <template>
   <li>
-    <input type="checkbox" :checked="todoObj.isCompleted" @input="$emit('toggle-complete', index)"/>
+    <input
+      type="checkbox"
+      :checked="todoObj.isCompleted"
+      @input="$emit('toggle-complete', index)"
+    />
     <div class="todo">
-        <input v-if="todoObj.isEditing" type="text" :value="todoObj.todo"/>
-        <span v-else :class="{'completed-todo': todoObj.isCompleted}">{{ todoObj.todo }}</span>
+      <input
+        v-if="todoObj.isEditing"
+        type="text"
+        :value="todoObj.todo"
+        @input="$emit('update-todo', $event.target.value, index)"
+      />
+      <span v-else :class="{ 'completed-todo': todoObj.isCompleted }">{{
+        todoObj.todo
+      }}</span>
     </div>
     <div class="todo-actions">
-        <Icon v-if="todoObj.isEditing" icon="ph:check-circle" width="22" height="22"  style="color: #41b080" class="icon" />
-        <Icon v-else icon="ph:pencil-fill" width="22" height="22"  style="color: #41b080" class="icon" />
-        <Icon icon="ph:trash" width="22" height="22"  style="color: #f95e5e" class="icon" />
+      <Icon
+        v-if="todoObj.isEditing"
+        icon="ph:check-circle"
+        width="22"
+        height="22"
+        style="color: #41b080"
+        class="icon"
+        @click="$emit('edit-todo', index)"
+      />
+      <Icon
+        v-else
+        icon="ph:pencil-fill"
+        width="22"
+        height="22"
+        style="color: #41b080"
+        class="icon"
+        @click="$emit('edit-todo', index)"
+      />
+      <Icon
+        icon="ph:trash"
+        width="22"
+        height="22"
+        style="color: #f95e5e"
+        class="icon"
+      />
     </div>
   </li>
 </template>
