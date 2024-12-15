@@ -6,15 +6,19 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  index: {
+    type: Number,
+    required: true,
+  }
 });
 </script>
 
 <template>
   <li>
-    <input type="checkbox" :checked="todoObj.isCompleted"/>
+    <input type="checkbox" :checked="todoObj.isCompleted" @input="$emit('toggle-complete', index)"/>
     <div class="todo">
         <input v-if="todoObj.isEditing" type="text" :value="todoObj.todo"/>
-        <span v-else>{{ todoObj.todo }}</span>
+        <span v-else :class="{'completed-todo': todoObj.isCompleted}">{{ todoObj.todo }}</span>
     </div>
     <div class="todo-actions">
         <Icon v-if="todoObj.isEditing" icon="ph:check-circle" width="22" height="22"  style="color: #41b080" class="icon" />
@@ -55,6 +59,10 @@ li {
 
   .todo {
     flex: 1;
+
+    .completed-todo {
+      text-decoration: line-through;
+    }
 
     input[type="text"] {
       width: 100%;
