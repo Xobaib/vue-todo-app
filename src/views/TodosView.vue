@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { uid } from "uid";
 import { Icon } from "@iconify/vue";
 
@@ -15,23 +15,42 @@ function createTodo(todo) {
     isCompleted: null,
     isEditing: null,
   });
+  setTodoListLocalStorage();
 }
 
 function toggleTodoComplete(todoPos) {
   todoList.value[todoPos].isCompleted = !todoList.value[todoPos].isCompleted;
+  setTodoListLocalStorage();
 }
 
 function toggleEditTodo(todoPos) {
   todoList.value[todoPos].isEditing = !todoList.value[todoPos].isEditing;
+  setTodoListLocalStorage();
 }
 
 function updateTodo(todoVal, todoPos) {
   todoList.value[todoPos].todo = todoVal;
+  setTodoListLocalStorage();
 }
 
 function deleteTodo(todoId) {
   todoList.value = todoList.value.filter((todo) => todo.id !== todoId);
+  setTodoListLocalStorage();
 }
+
+function setTodoListLocalStorage() {
+  localStorage.setItem("todoList", JSON.stringify(todoList.value));
+}
+
+function fetchTodoList() {
+  const savedTodoList = JSON.parse(localStorage.getItem("todoList"));
+
+  if (savedTodoList) {
+    todoList.value = savedTodoList;
+  }
+}
+
+fetchTodoList();
 </script>
 
 <template>
